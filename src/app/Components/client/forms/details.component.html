@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Client</h1>
+            <form [formGroup]="formClientDetail">
+                <div class="form-group">
+                    <label>Nom</label>
+                    <input class="form-control" type="text" formControlName="clientName">
+                </div>
+                <div class="form-group">
+                    <label>Congom</label>
+                    <input type="text" class="form-control" formControlName="clientSurname">
+                </div>
+                    <!-- Vehicles -->
+                <table class="table">
+                    <thead>
+                        <th>NumSerie</th>
+                        <th>Marca</th>
+                        <th>Model</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>001</td>
+                            <td>La pierre</td>
+                            <td>Turbo</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-outline-success">Enviar</button>
+            </form>
+        </div>
+        <!-- Taula de vehicles -->
+        
+        <div class="col-12 my-4">
+            <h2 class="text-center">Vehicles Client</h2>
+            <a href="clients/vehicle" class="btn btn-outline-success my-4">Afegir Vehicle</a>
+            <p-table #detailClientTable [value]="client.llistaVehicles" sortMode="multiple" [paginator]="true" [rows]="5"
+            [globalFilterFields]="['numSerie','name','surname']"
+            >
+            <ng-template pTemplate="caption">
+                <div class="table-header">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="detailClientTable.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                    </span>
+                </div>
+            </ng-template>
+        
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="numSerie" >Numero de Serie <p-sortIcon field="id"></p-sortIcon> </th>
+                    <th pSortableColumn="marca">Marca <p-sortIcon field="name"></p-sortIcon></th>
+                    <th pSortableColumn="model">Model <p-sortIcon field="surname"></p-sortIcon></th>
+                    <th>Detall</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-vehicleUnic>
+                <tr>
+                    <td>{{vehicleUnic.numSerie}}</td>
+                    <td>{{vehicleUnic.marca}}</td>
+                    <td>{{vehicleUnic.model}}</td>
+                    <td><a href="#" class="btn btn-sm btn-primary">Veure</a></td>
+                    <td><a href="#" class="btn btn-sm btn-success">Editar</a></td>
+                    <td><a href="#" class="btn btn-sm btn-danger">Eliminar</a></td>
+                </tr>
+            </ng-template>
+        </p-table>
+        </div>
+    </div>
+</div>

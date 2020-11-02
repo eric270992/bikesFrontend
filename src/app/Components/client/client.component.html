@@ -1,0 +1,76 @@
+<h2 class="text-center">Clients</h2>
+<!-- Taule angular Pura -->
+<!-- <div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="botons">
+                <a href="#" class="my-4 btn btn-outline-success">Afegir</a>
+            </div>
+            <div class="search my-4">
+                Nom: <input type="text" id="searchClient">
+                Cognom: <input type="text" id="searchCognom">
+            </div>
+            <table class="table">
+                <thead>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Cognoms</th>
+                    <th>Detall</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let client of llistaClients">
+                        <td>{{client.id}}</td>
+                        <td>{{client.name}}</td>
+                        <td>{{client.surname}}</td>
+                        <td><a href="#" class="btn btn-sm btn-primary">Veure</a></td>
+                        <td><a href="#" class="btn btn-sm btn-success">Editar</a></td>
+                        <td><a href="#" class="btn btn-sm btn-danger">Eliminar</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div> -->
+
+<!-- Prime NG Table Data -->
+<div class="container">
+    <p-table #clientsTable [value]="llistaClients" sortMode="multiple" [paginator]="true" [rows]="5"
+        [globalFilterFields]="['id','name','surname']"
+    >
+    <ng-template pTemplate="caption">
+        <div class="table-header">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="clientsTable.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+            </span>
+        </div>
+    </ng-template>
+    
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id" >Id <p-sortIcon field="id"></p-sortIcon> </th>
+                <th pSortableColumn="name">Nom <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="surname">Cognoms <p-sortIcon field="surname"></p-sortIcon></th>
+                <th>Detall</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-client>
+            <tr>
+                <td>{{client.id}}</td>
+                <td>{{client.name}}</td>
+                <td>{{client.surname}}</td>
+                <td><a href="clients/detail/{{client.id}}" class="btn btn-sm btn-primary">Veure</a></td>
+                <td><a href="#" class="btn btn-sm btn-success">Editar</a></td>
+                <td><a href="#" class="btn btn-sm btn-danger">Eliminar</a></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

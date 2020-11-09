@@ -13,6 +13,7 @@ export class DetailsComponent implements OnInit {
 
   client:Client=new Client();
   public formClientDetail:FormGroup;
+  id:string="";
 
   constructor(
     private _route:ActivatedRoute, 
@@ -29,9 +30,9 @@ export class DetailsComponent implements OnInit {
   }
 
   getClientById(){
-    if(this._route.snapshot.paramMap.get('id')){
-      var id = this._route.snapshot.paramMap.get('id');
-      this._serviceClient.getClientById(id).subscribe(
+    this.id=this._route.snapshot.paramMap.get('id');
+    if(this.id){
+      this._serviceClient.getClientById(this.id).subscribe(
         (clientTornat) => {
           this.client=clientTornat;
 

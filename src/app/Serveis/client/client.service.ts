@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Client } from 'src/app/Classes/client';
 
@@ -18,5 +18,10 @@ export class ClientService {
 
   public getClientById(id){
     return this.http.get<Client>(this.url+"/"+id);
+  }
+
+  public saveClient(client:Client){
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this.http.post<Client>(this.url,client,{headers:headers});
   }
 }

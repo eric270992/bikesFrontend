@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2>Full de treball</h2>
+            <form [formGroup]="formIncidencia">
+                <div class="row">
+                    <div class="col my-2">
+                        <div class="form-group">
+                            <label>Nom Client</label>
+                            <input class="disabled form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="col my-2">
+                        <div class="form-group">
+                            <label>NumSerie Vehicle</label>
+                            <input class="disabled form-control" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col my-2">
+                        <div class="form-group">
+                            <label class="d-block">Data Entrada</label>
+                            <p-calendar class="d-block" name="dataEntrada" formControlName="dataEntrada" dateFormat="dd/mm/yy" showButtonBar="true"></p-calendar>
+                        </div>
+                    </div>
+                    <div class="col my-2">
+                        <div class="form-group d-block">
+                            <label class="d-block">Data Sortida</label>
+                            <p-calendar class="d-block" name="dataSortida" formControlName="dataSortida" dateFormat="dd/mm/yy" showButtonBar="true"></p-calendar>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col my-2">
+                        <label>Detalls Observacions</label>
+                        <textarea rows="7" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col my-2">
+                        <label>Temps Total</label>
+                        <input type="number" class="form-control">
+                    </div>
+                    <div class="col my-2">
+                        <label>Preu Final</label>
+                        <input type="number" class="form-control">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-sm btn-success">Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>

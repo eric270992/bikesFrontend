@@ -3,13 +3,21 @@ import { Routes, RouterModule } from '@angular/router';
 import { ClientComponent } from './Components/client/client.component';
 import { DetailsComponent } from './Components/client/forms/details.component';
 import { FormAddComponent } from './Components/vehicle-unic/forms/form-add.component';
+import { AddClientComponent } from './Components/client/forms/add-client.component';
+import { VehicleUnicComponent } from './Components/vehicle-unic/vehicle-unic.component';
+import { FullIncidenciaComponent } from './Components/full-incidencia/full-incidencia.component';
 
 
 const routes: Routes = [
   {path:"", component:ClientComponent},
   {path:"clients", component:ClientComponent},
+  {path:"clients/add",component:AddClientComponent},
   {path:"clients/detail/:id", component:DetailsComponent},
-  {path:"clients/vehicle", component:FormAddComponent},
+  {path:"clients/:id/vehicle", component:FormAddComponent},
+  {path:"vehicles/detail/:numSerie", component:VehicleUnicComponent},
+  {path:"incidencia", component:FullIncidenciaComponent},
+
+
 ];
 
 @NgModule({

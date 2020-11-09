@@ -11,21 +11,6 @@
                     <label>Congom</label>
                     <input type="text" class="form-control" formControlName="clientSurname">
                 </div>
-                    <!-- Vehicles -->
-                <table class="table">
-                    <thead>
-                        <th>NumSerie</th>
-                        <th>Marca</th>
-                        <th>Model</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>001</td>
-                            <td>La pierre</td>
-                            <td>Turbo</td>
-                        </tr>
-                    </tbody>
-                </table>
                 <button type="submit" class="btn btn-outline-success">Enviar</button>
             </form>
         </div>
@@ -33,7 +18,7 @@
         
         <div class="col-12 my-4">
             <h2 class="text-center">Vehicles Client</h2>
-            <a href="clients/vehicle" class="btn btn-outline-success my-4">Afegir Vehicle</a>
+            <a href="clients/{{id}}/vehicle" class="btn btn-outline-success my-4">Afegir Vehicle</a>
             <p-table #detailClientTable [value]="client.llistaVehicles" sortMode="multiple" [paginator]="true" [rows]="5"
             [globalFilterFields]="['numSerie','name','surname']"
             >
@@ -62,7 +47,7 @@
                     <td>{{vehicleUnic.numSerie}}</td>
                     <td>{{vehicleUnic.marca}}</td>
                     <td>{{vehicleUnic.model}}</td>
-                    <td><a href="#" class="btn btn-sm btn-primary">Veure</a></td>
+                    <td><a href="vehicles/detail/{{vehicleUnic.numSerie}}" class="btn btn-sm btn-primary">Veure</a></td>
                     <td><a href="#" class="btn btn-sm btn-success">Editar</a></td>
                     <td><a href="#" class="btn btn-sm btn-danger">Eliminar</a></td>
                 </tr>

@@ -12,6 +12,10 @@ import {TableModule} from 'primeng/table';
 import { DetailsComponent } from './Components/client/forms/details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormAddComponent } from './Components/vehicle-unic/forms/form-add.component';
+import { AddClientComponent } from './Components/client/forms/add-client.component';
+import { FullIncidenciaComponent } from './Components/full-incidencia/full-incidencia.component';
+import {CalendarModule} from 'primeng/calendar';  
+
 
 @NgModule({
   declarations: [
@@ -19,7 +23,9 @@ import { FormAddComponent } from './Components/vehicle-unic/forms/form-add.compo
     ClientComponent,
     VehicleUnicComponent,
     DetailsComponent,
-    FormAddComponent
+    FormAddComponent,
+    AddClientComponent,
+    FullIncidenciaComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +35,7 @@ import { FormAddComponent } from './Components/vehicle-unic/forms/form-add.compo
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    CalendarModule,
 
   ],
   providers: [],

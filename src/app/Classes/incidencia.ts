@@ -4,7 +4,7 @@ import { VehicleUnic } from './vehicle-unic';
 export class Incidencia {
     id:number;
     client:Client;
-    vehicleUnic:VehicleUnic;
+    vehicle:VehicleUnic;
     dataEntrada:Date;
     dataSortida:Date;
     observacions:string;

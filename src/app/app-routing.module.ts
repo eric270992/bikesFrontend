@@ -15,7 +15,7 @@ const routes: Routes = [
   {path:"clients/detail/:id", component:DetailsComponent},
   {path:"clients/:id/vehicle", component:FormAddComponent},
   {path:"vehicles/detail/:numSerie", component:VehicleUnicComponent},
-  {path:"incidencia", component:FullIncidenciaComponent},
+  {path:"incidencia/:numSerie", component:FullIncidenciaComponent},
 
 
 ];

@@ -61,6 +61,8 @@
                 <th pSortableColumn="id" >Id <p-sortIcon field="id"></p-sortIcon> </th>
                 <th pSortableColumn="name">Nom <p-sortIcon field="name"></p-sortIcon></th>
                 <th pSortableColumn="surname">Cognoms <p-sortIcon field="surname"></p-sortIcon></th>
+                <th pSortableColumn="telefon">Telefon <p-sortIcon field="telefon"></p-sortIcon></th>
+                <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
                 <th>Detall</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
@@ -71,6 +73,8 @@
                 <td>{{client.id}}</td>
                 <td>{{client.name}}</td>
                 <td>{{client.surname}}</td>
+                <td>{{client.telefon}}</td>
+                <td>{{client.email}}</td>
                 <td><a href="clients/detail/{{client.id}}" class="btn btn-sm btn-primary">Veure</a></td>
                 <td><a href="#" class="btn btn-sm btn-success">Editar</a></td>
                 <td><a href="#" class="btn btn-sm btn-danger">Eliminar</a></td>

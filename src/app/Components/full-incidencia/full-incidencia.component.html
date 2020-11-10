@@ -7,13 +7,13 @@
                     <div class="col my-2">
                         <div class="form-group">
                             <label>Nom Client</label>
-                            <input class="disabled form-control" type="text">
+                            <input class="disabled form-control" formControlName="nameClient" type="text">
                         </div>
                     </div>
                     <div class="col my-2">
                         <div class="form-group">
                             <label>NumSerie Vehicle</label>
-                            <input class="disabled form-control" type="text">
+                            <input class="disabled form-control" formControlName="numSerie" type="text">
                         </div>
                     </div>
                 </div>
@@ -34,20 +34,20 @@
                 <div class="row">
                     <div class="col my-2">
                         <label>Detalls Observacions</label>
-                        <textarea rows="7" class="form-control"></textarea>
+                        <textarea rows="7" class="form-control" formControlName="observacions"></textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col my-2">
                         <label>Temps Total</label>
-                        <input type="number" class="form-control">
+                        <input type="number" class="form-control" formControlName="tempsTotal">
                     </div>
                     <div class="col my-2">
                         <label>Preu Final</label>
-                        <input type="number" class="form-control">
+                        <input type="number" class="form-control" formControlName="preuFinal">
                     </div>
                 </div>
-                <button type="button" class="btn btn-sm btn-success">Guardar</button>
+                <button type="button" class="btn btn-sm btn-success" (click)="guardar()">Guardar</button>
             </form>
         </div>
     </div>

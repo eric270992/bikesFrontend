@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { VehicleNouService } from 'src/app/Serveis/vehicleUnic/vehicle-nou.service';
 import { ClientService } from 'src/app/Serveis/client/client.service';
 import { VehicleUnic } from 'src/app/Classes/vehicle-unic';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-unic',
@@ -15,7 +16,11 @@ export class VehicleUnicComponent implements OnInit {
   formVehicleAdd:FormGroup;
   vehicle:VehicleUnic=new VehicleUnic();
 
-  constructor(private fb:FormBuilder, private route:ActivatedRoute, private serviceVehicleUnic:VehicleNouService, private clientService:ClientService) { }
+  constructor(private fb:FormBuilder, 
+    private route:ActivatedRoute,
+    private serviceVehicleUnic:VehicleNouService, 
+    private clientService:ClientService,
+    private router:Router) { }
 
   ngOnInit(): void {
     //Iniciem formulari en blanc
@@ -45,7 +50,10 @@ export class VehicleUnicComponent implements OnInit {
         this.formVehicleAdd.controls['formNumSerie'].setValue(this.vehicle.numSerie);
         this.formVehicleAdd.controls['formMarca'].setValue(this.vehicle.marca);
         this.formVehicleAdd.controls['formModel'].setValue(this.vehicle.model);
+
+        console.log(this.vehicle);
       }
     )
   }
+
 }

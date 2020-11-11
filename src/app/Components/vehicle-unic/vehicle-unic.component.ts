@@ -56,4 +56,16 @@ export class VehicleUnicComponent implements OnInit {
     )
   }
 
+  update(){
+    this.vehicle.numSerie=this.formVehicleAdd.controls['formNumSerie'].value;
+    this.vehicle.marca=this.formVehicleAdd.controls['formMarca'].value;
+    this.vehicle.model=this.formVehicleAdd.controls['formModel'].value;
+
+    this.serviceVehicleUnic.saveVehicle(this.vehicle).subscribe(
+      (vehicleGuardat) => {
+        console.log("Vehicle actualtizat correctament");
+      }
+    )
+  }
+
 }

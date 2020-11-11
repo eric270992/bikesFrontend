@@ -11,6 +11,10 @@ export class IncidenciaService {
 
   constructor(private http:HttpClient) { }
 
+  public getById(id){
+    return this.http.get<Incidencia>(this.url+'/'+id);
+  }
+
   public save(incidencia:Incidencia){
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this.http.post<Incidencia>(this.url,incidencia,{headers:headers});

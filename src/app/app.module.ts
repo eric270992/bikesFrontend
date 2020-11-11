@@ -15,6 +15,8 @@ import { FormAddComponent } from './Components/vehicle-unic/forms/form-add.compo
 import { AddClientComponent } from './Components/client/forms/add-client.component';
 import { FullIncidenciaComponent } from './Components/full-incidencia/full-incidencia.component';
 import {CalendarModule} from 'primeng/calendar';  
+import {ToastModule} from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -36,9 +38,13 @@ import {CalendarModule} from 'primeng/calendar';
     FormsModule,
     ReactiveFormsModule,
     CalendarModule,
+    ToastModule,
+
 
   ],
-  providers: [],
+  providers: [
+    MessageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

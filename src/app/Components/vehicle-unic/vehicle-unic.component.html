@@ -14,7 +14,7 @@
                     <label>Model</label>
                     <input class="form-control" type="text" name="Model" formControlName="formModel">
                 </div>
-                <button class="btn btn-primary">Guardar</button>
+                <button class="btn btn-primary" (click)="update()">Guardar</button>
                 <a class="btn btn-success" href="/incidencia/{{vehicle.numSerie}}">Afegir incidencia</a>
             </form>
 
@@ -29,6 +29,8 @@
                         <th>Observacions</th>
                         <th>Temps Total</th>
                         <th>Preu Final</th>
+                        <th>Editar/Veure</th>
+                        <th>Eliminar</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-incidencia>
@@ -39,6 +41,8 @@
                         <td>{{incidencia.observacions}}</td>
                         <td>{{incidencia.tempsTotal}}</td>
                         <td>{{incidencia.preuFinal}}</td>
+                        <td><a href="/incidencia/{{vehicle.numSerie}}/{{incidencia.id}}" class="btn btn-success">Editar/Verure</a>
+                        <td><a href="#" class="btn btn-danger">Eliminar</a></td>
                     </tr>
                 </ng-template>
             </p-table>

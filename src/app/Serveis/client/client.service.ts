@@ -21,6 +21,8 @@ export class ClientService {
   }
 
   public saveClient(client:Client){
+    console.log("Save Client ServiceClient");
+    console.log(client);
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this.http.post<Client>(this.url,client,{headers:headers});
   }

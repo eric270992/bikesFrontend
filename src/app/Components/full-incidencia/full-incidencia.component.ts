@@ -22,6 +22,7 @@ export class FullIncidenciaComponent implements OnInit {
   formIncidencia:FormGroup;
   incidencia:Incidencia = new Incidencia();
   datepipe:DatePipe;
+  updateInc:Boolean = false;
   
   client:Client = new Client();
   vehicleUnic:VehicleUnic = new VehicleUnic();
@@ -48,6 +49,13 @@ export class FullIncidenciaComponent implements OnInit {
       tempsTotal: new FormControl(''),
       preuFinal: new FormControl('')
     });
+
+    //Si ens han passat un id d'incidencia carreguem l'incidencia
+    if(this.route.snapshot.paramMap.get('idIncidencia')){
+      let idIncidencia = this.route.snapshot.paramMap.get('idIncidencia');
+      this.updateInc = true;
+      this.carregarIncidecia(idIncidencia);
+    }
   }
 
   recuperarVehicle(numSeriePassat){
@@ -59,6 +67,20 @@ export class FullIncidenciaComponent implements OnInit {
       }
     )
   }
+
+  carregarIncidecia(idIncidencia){
+    this.seriviceIncidencia.getById(idIncidencia).subscribe(
+      (incidenciaRecuperada) => {
+        this.incidencia = incidenciaRecuperada;
+        this.formIncidencia.controls['dataEntrada'].setValue(new Date(incidenciaRecuperada.dataEntrada));
+        this.formIncidencia.controls['dataSortida'].setValue(new Date(incidenciaRecuperada.dataSortida));
+        this.formIncidencia.controls['observacions'].setValue(incidenciaRecuperada.observacions);
+        this.formIncidencia.controls['tempsTotal'].setValue(incidenciaRecuperada.tempsTotal);
+        this.formIncidencia.controls['preuFinal'].setValue(incidenciaRecuperada.preuFinal);
+      }
+    )
+  }
+
   guardar(){
     this.incidencia.client = this.vehicleUnic.client;
     this.incidencia.vehicle = this.vehicleUnic;

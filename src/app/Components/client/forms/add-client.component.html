@@ -10,10 +10,18 @@
                     <label>Congom</label>
                     <input type="text" class="form-control" formControlName="clientSurname">
                 </div>
+                <div class="form-group">
+                    <label>Telefon</label>
+                    <input type="text" class="form-control" formControlName="clientTelefon">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" class="form-control" formControlName="clientEmail">
+                </div>
             
                 <button type="button" class="btn btn-outline-success" (click)="guardar()">Guardar</button>
             </form>
         </div>
     </div>
 </div>
-
+<p-toast></p-toast>

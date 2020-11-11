@@ -25,8 +25,9 @@ export class DetailsComponent implements OnInit {
     this.formClientDetail = this.fb.group({
       clientName: new FormControl(''),
       clientSurname: new FormControl(''),
+      clientTelefon: new FormControl(''),
+      clientEmail: new FormControl('')
     })
-    this.getClientById();
   }
 
   getClientById(){
@@ -38,6 +39,8 @@ export class DetailsComponent implements OnInit {
 
           this.formClientDetail.controls['clientName'].setValue(this.client.name);
           this.formClientDetail.controls['clientSurname'].setValue(this.client.surname);
+          this.formClientDetail.controls['clientTelefon'].setValue(this.client.telefon);
+          this.formClientDetail.controls['clientEmail'].setValue(this.client.email);
 
           console.log(this.client);
         }
@@ -46,6 +49,17 @@ export class DetailsComponent implements OnInit {
 
     }
     
+  }
+
+  update(){
+    this.client.name=this.formClientDetail.controls['clientName'].value;
+    this.client.surname=this.formClientDetail.controls['clientSurname'].value;
+    this.client.telefon=this.formClientDetail.controls['clientTelefon'].value;
+    this.client.email=this.formClientDetail.controls['clientEmail'].value;
+
+    this._serviceClient.saveClient(this.client).subscribe(
+      (clientGuardat) => console.log("Client guardat satisfactoriament")
+    )
   }
 
 }

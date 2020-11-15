@@ -19,4 +19,8 @@ export class IncidenciaService {
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this.http.post<Incidencia>(this.url,incidencia,{headers:headers});
   }
+
+  public delete(id){
+    return this.http.delete(this.url+"/"+id);
+  }
 }

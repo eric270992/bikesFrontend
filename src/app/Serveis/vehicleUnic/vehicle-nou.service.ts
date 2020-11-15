@@ -20,4 +20,8 @@ export class VehicleNouService {
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this.http.post<VehicleUnic>(this.url,vehicle,{headers:headers});
   }
+
+  eliminarVehicle(numSerie){
+    return this.http.delete(this.url+'/'+numSerie);
+  }
 }

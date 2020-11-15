@@ -17,7 +17,9 @@ import { FullIncidenciaComponent } from './Components/full-incidencia/full-incid
 import {CalendarModule} from 'primeng/calendar';  
 import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-
+import {ConfirmationService} from 'primeng/api';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DynamicDialogModule, DialogService} from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { MessageService } from 'primeng/api';
     DetailsComponent,
     FormAddComponent,
     AddClientComponent,
-    FullIncidenciaComponent
+    FullIncidenciaComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -39,11 +42,13 @@ import { MessageService } from 'primeng/api';
     ReactiveFormsModule,
     CalendarModule,
     ToastModule,
-
-
+    ConfirmDialogModule,
+    DynamicDialogModule,
   ],
   providers: [
-    MessageService
+    MessageService,
+    ConfirmationService,
+    DialogService,
   ],
   bootstrap: [AppComponent]
 })

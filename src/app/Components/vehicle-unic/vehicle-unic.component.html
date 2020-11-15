@@ -42,7 +42,7 @@
                         <td>{{incidencia.tempsTotal}}</td>
                         <td>{{incidencia.preuFinal}}</td>
                         <td><a href="/incidencia/{{vehicle.numSerie}}/{{incidencia.id}}" class="btn btn-success">Editar/Verure</a>
-                        <td><a href="#" class="btn btn-danger">Eliminar</a></td>
+                        <td><button (click)="eliminar(incidencia.id)"  class="btn btn-danger">Eliminar</button></td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -50,3 +50,7 @@
         </div>
     </div>
 </div>
+
+<p-toast></p-toast>
+<!-- Dialog box -->
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog> 

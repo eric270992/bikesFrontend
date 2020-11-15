@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from 'src/app/Serveis/client/client.service';
 import { Client } from 'src/app/Classes/client';
+import {ConfirmationService} from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { AddClientComponent } from './forms/add-client.component';
 
 @Component({
   selector: 'app-client',
@@ -11,9 +14,12 @@ export class ClientComponent implements OnInit {
 
   llistaClients:Client[]=[];
 
-  constructor(private _serviceClient:ClientService) { }
+  constructor(private _serviceClient:ClientService,
+    private confirmationService: ConfirmationService,
+    private dialogService: DialogService) { }
 
   ngOnInit(): void {
+
 
     this.getClients();
     /*this.llistaClients = [
@@ -27,6 +33,38 @@ export class ClientComponent implements OnInit {
   getClients(){
     this._serviceClient.getAllClient().subscribe(
       (resultado) => this.llistaClients = resultado
+    )
+  }
+
+  eliminar(id){
+    this.confirmationService.confirm({
+      message: 'Estas segur que vols eliminar aquest client?',
+      header: 'Eliminar Client',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this._serviceClient.deleteClient(id).subscribe(
+          (msg) => console.log(msg)
+        )
+        console.log("eliminat");
+      },
+      reject: () => {
+
+      }
+    });
+  }
+
+  mostrarAfegir(){
+    const ref = this.dialogService.open(AddClientComponent, {
+      header: 'Afegeix un client',
+      width: '70%'
+    });
+
+    //Subscribe onclose evenet of dialogBox, remember this is closed in add-client.component.ts on guardar()
+    ref.onClose.subscribe(
+      (closeReturn) => {
+        console.log("Modal tancat");
+        this.getClients();
+      }
     )
   }
 

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Calendar } from 'primeng/calendar';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Incidencia } from 'src/app/Classes/incidencia';
 import { Client } from 'src/app/Classes/client';
@@ -8,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { VehicleNouService } from 'src/app/Serveis/vehicleUnic/vehicle-nou.service';
 import { DatePipe } from '@angular/common';
 import { IncidenciaService } from 'src/app/Serveis/incidencia/incidencia.service';
-import {Location} from '@angular/common';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-full-incidencia',
@@ -32,7 +31,9 @@ export class FullIncidenciaComponent implements OnInit {
     private route:ActivatedRoute, 
     private serviceVehicleUnic:VehicleNouService, 
     private seriviceIncidencia:IncidenciaService,
-    private location:Location) { 
+    private router:Router,
+    private messageService:MessageService,
+    private confirmationService: ConfirmationService,) { 
     
   }
 
@@ -95,10 +96,18 @@ export class FullIncidenciaComponent implements OnInit {
 
     this.seriviceIncidencia.save(this.incidencia).subscribe(
       (incidenciaGuardada) => {
-        return this.location.back();
+        //Mostrem missatge al nostre <p-toast></p-toast> de la vista
+        this.messageService.add({severity:'success', summary: 'success', detail: 'Incidència afegida correctament'});
+        //Eseprem 1 s a tornar enrere
+        setTimeout(()=>{
+          //Tornem a la vista de detall del vehicle
+          this.router.navigate(['/vehicles/detail/'+this.incidencia.vehicle.numSerie]);
+        },1000)
       }
     )
 
   }
+
+  
 
 }

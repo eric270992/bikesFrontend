@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ClientService } from 'src/app/Serveis/client/client.service';
 import { Client } from 'src/app/Classes/client';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-add-client',
@@ -13,7 +14,13 @@ import { Router } from '@angular/router';
 export class AddClientComponent implements OnInit {
 
   formClientAdd:FormGroup;
-  constructor(private fb:FormBuilder, private clientService:ClientService,private messageService: MessageService, private router:Router) { }
+  constructor(private fb:FormBuilder, 
+    private clientService:ClientService,
+    private messageService: MessageService, 
+    private router:Router,
+    //Injectem una referència al DynamiDialog que estarà per poder-lo gestionar.
+    //Aquest dialog s'obre desde client.component.ts per mostrar un modal que ens permeti guardar clients
+    public dynamicDialog: DynamicDialogRef) { }
 
   ngOnInit(): void {
     this.formClientAdd = this.fb.group({
@@ -39,6 +46,7 @@ export class AddClientComponent implements OnInit {
         this.messageService.add({severity:'success', summary: 'Success', detail: 'Client guardat correctament'});
         //Eseprem 1 s a tornar enrere
         setTimeout(()=>{
+          this.dynamicDialog.close();
           //Tornem a la vista clients
           this.router.navigate(['/']);
         },1000)

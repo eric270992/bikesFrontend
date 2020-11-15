@@ -26,4 +26,8 @@ export class ClientService {
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this.http.post<Client>(this.url,client,{headers:headers});
   }
+
+  public deleteClient(id){
+    return this.http.delete<Client>(this.url+"/"+id);
+  }
 }

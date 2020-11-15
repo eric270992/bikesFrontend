@@ -26,7 +26,7 @@
         
         <div class="col-12 my-4">
             <h2 class="text-center">Vehicles Client</h2>
-            <a href="clients/{{id}}/vehicle" class="btn btn-outline-success my-4">Afegir Vehicle</a>
+            <button  class="btn btn-outline-success my-4" (click)="mostrarAfegir()">Afegir Vehicle</button>
             <p-table #detailClientTable [value]="client.llistaVehicles" sortMode="multiple" [paginator]="true" [rows]="5"
             [globalFilterFields]="['numSerie','name','surname']"
             >
@@ -45,8 +45,7 @@
                     <th pSortableColumn="numSerie" >Numero de Serie <p-sortIcon field="id"></p-sortIcon> </th>
                     <th pSortableColumn="marca">Marca <p-sortIcon field="name"></p-sortIcon></th>
                     <th pSortableColumn="model">Model <p-sortIcon field="surname"></p-sortIcon></th>
-                    <th>Detall</th>
-                    <th>Editar</th>
+                    <th>Veure/Editar</th>
                     <th>Eliminar</th>
                 </tr>
             </ng-template>
@@ -55,12 +54,16 @@
                     <td>{{vehicleUnic.numSerie}}</td>
                     <td>{{vehicleUnic.marca}}</td>
                     <td>{{vehicleUnic.model}}</td>
-                    <td><a href="vehicles/detail/{{vehicleUnic.numSerie}}" class="btn btn-sm btn-primary">Veure</a></td>
-                    <td><a href="#" class="btn btn-sm btn-success">Editar</a></td>
-                    <td><a href="#" class="btn btn-sm btn-danger">Eliminar</a></td>
+                    <td><a href="vehicles/detail/{{vehicleUnic.numSerie}}" class="btn btn-sm btn-primary">Veure/Editar</a></td>
+                    <td><button (click)="eliminar(vehicleUnic.numSerie)" class="btn btn-sm btn-danger">Eliminar</button></td>
                 </tr>
             </ng-template>
         </p-table>
         </div>
     </div>
 </div>
+
+<p-toast></p-toast>
+
+<!-- Dialog box -->
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog> 

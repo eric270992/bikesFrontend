@@ -5,6 +5,8 @@ import { VehicleNouService } from 'src/app/Serveis/vehicleUnic/vehicle-nou.servi
 import { ClientService } from 'src/app/Serveis/client/client.service';
 import { VehicleUnic } from 'src/app/Classes/vehicle-unic';
 import {Router} from '@angular/router';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { IncidenciaService } from 'src/app/Serveis/incidencia/incidencia.service';
 
 @Component({
   selector: 'app-vehicle-unic',
@@ -19,8 +21,11 @@ export class VehicleUnicComponent implements OnInit {
   constructor(private fb:FormBuilder, 
     private route:ActivatedRoute,
     private serviceVehicleUnic:VehicleNouService, 
+    private seriviceIncidencia:IncidenciaService,
     private clientService:ClientService,
-    private router:Router) { }
+    private router:Router,
+    private messageService:MessageService,
+    private confirmationService: ConfirmationService,) { }
 
   ngOnInit(): void {
     //Iniciem formulari en blanc
@@ -66,6 +71,25 @@ export class VehicleUnicComponent implements OnInit {
         console.log("Vehicle actualtizat correctament");
       }
     )
+  }
+
+  eliminar(id){
+    this.confirmationService.confirm({
+      message: 'Estas segur que vols eliminar aquesta incidència?',
+      header: 'Eliminar Incidència',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.seriviceIncidencia.delete(id).subscribe(
+          (msg) => {
+            this.messageService.add({severity:'warn', summary: 'warn', detail: 'Incidència eliminada correctament'});
+            //Filtrar la llista d'incidències i eliminar la que hem borrat.
+          }
+        )
+      },
+      reject: () => {
+
+      }
+    });
   }
 
 }

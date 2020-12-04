@@ -20,6 +20,9 @@ import { MessageService } from 'primeng/api';
 import {ConfirmationService} from 'primeng/api';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {DynamicDialogModule, DialogService} from 'primeng/dynamicdialog';
+import { NotFoundComponentComponent } from './Components/not-found-component/not-found-component.component';
+import { NavbarComponent } from './Components/navbar/navbar.component';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,8 @@ import {DynamicDialogModule, DialogService} from 'primeng/dynamicdialog';
     FormAddComponent,
     AddClientComponent,
     FullIncidenciaComponent,
+    NotFoundComponentComponent,
+    NavbarComponent,
 
   ],
   imports: [
@@ -44,6 +49,7 @@ import {DynamicDialogModule, DialogService} from 'primeng/dynamicdialog';
     ToastModule,
     ConfirmDialogModule,
     DynamicDialogModule,
+    DialogModule,
   ],
   providers: [
     MessageService,

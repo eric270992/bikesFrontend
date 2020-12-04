@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Incidencia } from 'src/app/Classes/incidencia';
 import { Client } from 'src/app/Classes/client';
 import { VehicleUnic } from 'src/app/Classes/vehicle-unic';
@@ -8,6 +8,7 @@ import { VehicleNouService } from 'src/app/Serveis/vehicleUnic/vehicle-nou.servi
 import { DatePipe } from '@angular/common';
 import { IncidenciaService } from 'src/app/Serveis/incidencia/incidencia.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { UtilitatsService } from 'src/app/Serveis/utilitats/utilitats.service';
 
 @Component({
   selector: 'app-full-incidencia',
@@ -27,13 +28,14 @@ export class FullIncidenciaComponent implements OnInit {
   vehicleUnic:VehicleUnic = new VehicleUnic();
   numSeriePassat:string = "";
 
-  constructor( private fb:FormBuilder, 
-    private route:ActivatedRoute, 
-    private serviceVehicleUnic:VehicleNouService, 
-    private seriviceIncidencia:IncidenciaService,
-    private router:Router,
-    private messageService:MessageService,
-    private confirmationService: ConfirmationService,) { 
+  constructor( public fb:FormBuilder, 
+    public route:ActivatedRoute, 
+    public serviceVehicleUnic:VehicleNouService, 
+    public seriviceIncidencia:IncidenciaService,
+    public router:Router,
+    public messageService:MessageService,
+    public confirmationService: ConfirmationService,
+    public utilitats:UtilitatsService) { 
     
   }
 
@@ -42,11 +44,12 @@ export class FullIncidenciaComponent implements OnInit {
     this.numSeriePassat = this.route.snapshot.paramMap.get('numSerie');
     this.recuperarVehicle(this.numSeriePassat);
     this.formIncidencia = this.fb.group({
-      nameClient: new FormControl(''),
-      numSerie: new FormControl(''),
+      nameClient: new FormControl('',[Validators.required]),
+      numSerie: new FormControl('',[Validators.required]),
       dataEntrada:new FormControl(''),
       dataSortida:new FormControl(''),
       observacions: new FormControl(''),
+      descFeina: new FormControl(''),
       tempsTotal: new FormControl(''),
       preuFinal: new FormControl('')
     });
@@ -62,7 +65,8 @@ export class FullIncidenciaComponent implements OnInit {
   recuperarVehicle(numSeriePassat){
     this.serviceVehicleUnic.findVehicleNumSerie(numSeriePassat).subscribe(
       (vehicleTornat) => {
-        this.vehicleUnic=vehicleTornat;;
+        this.vehicleUnic=vehicleTornat;
+        this.client = vehicleTornat.client;
         this.formIncidencia.controls['nameClient'].setValue(this.vehicleUnic.client.name);
         this.formIncidencia.controls['numSerie'].setValue(this.vehicleUnic.numSerie);
       }
@@ -76,6 +80,7 @@ export class FullIncidenciaComponent implements OnInit {
         this.formIncidencia.controls['dataEntrada'].setValue(new Date(incidenciaRecuperada.dataEntrada));
         this.formIncidencia.controls['dataSortida'].setValue(new Date(incidenciaRecuperada.dataSortida));
         this.formIncidencia.controls['observacions'].setValue(incidenciaRecuperada.observacions);
+        this.formIncidencia.controls['descFeina'].setValue(incidenciaRecuperada.descFeina);
         this.formIncidencia.controls['tempsTotal'].setValue(incidenciaRecuperada.tempsTotal);
         this.formIncidencia.controls['preuFinal'].setValue(incidenciaRecuperada.preuFinal);
       }
@@ -88,24 +93,35 @@ export class FullIncidenciaComponent implements OnInit {
     this.incidencia.dataEntrada = this.formIncidencia.controls['dataEntrada'].value;
     this.incidencia.dataSortida = this.formIncidencia.controls['dataSortida'].value;
     this.incidencia.observacions = this.formIncidencia.controls['observacions'].value;
+    this.incidencia.descFeina = this.formIncidencia.controls['descFeina'].value;
     this.incidencia.tempsTotal = this.formIncidencia.controls['tempsTotal'].value;
     this.incidencia.preuFinal = this.formIncidencia.controls['preuFinal'].value;
 
-    console.log(this.incidencia);
+
+    if(this.formIncidencia.valid){
+      this.seriviceIncidencia.save(this.incidencia).subscribe(
+        (incidenciaGuardada) => {
+          //Mostrem missatge al nostre <p-toast></p-toast> de la vista
+          this.messageService.add({severity:'success', summary: 'success', detail: 'Incidència afegida correctament'});
+          //Eseprem 1 s a tornar enrere
+          setTimeout(()=>{
+            //Tornem a la vista de detall del vehicle
+            this.router.navigate(['/vehicles/detail/'+this.incidencia.vehicle.numSerie]);
+          },1000)
+        }
+      );//fi subscribe
+    }
 
 
-    this.seriviceIncidencia.save(this.incidencia).subscribe(
-      (incidenciaGuardada) => {
-        //Mostrem missatge al nostre <p-toast></p-toast> de la vista
-        this.messageService.add({severity:'success', summary: 'success', detail: 'Incidència afegida correctament'});
-        //Eseprem 1 s a tornar enrere
-        setTimeout(()=>{
-          //Tornem a la vista de detall del vehicle
-          this.router.navigate(['/vehicles/detail/'+this.incidencia.vehicle.numSerie]);
-        },1000)
-      }
-    )
+  }
 
+  calcTotal(){
+    this.formIncidencia.controls['preuFinal'].setValue(this.formIncidencia.controls['tempsTotal'].value*38);
+  }
+
+
+  imprimirPDF(){
+    this.utilitats.imprimirIncidenciaPDF(this.incidencia);
   }
 
   

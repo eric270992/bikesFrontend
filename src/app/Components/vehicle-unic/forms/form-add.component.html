@@ -4,7 +4,7 @@
             <form [formGroup]="formVehicleAdd">
                 <div class="form-group">
                     <label>Número de Serie</label>
-                    <input class="form-control" type="text" name="numSerie" formControlName="formNumSerie">
+                    <input class="form-control" type="text" name="numSerie" formControlName="formNumSerie" [class.is-invalid]="formVehicleAdd.get('formNumSerie').touched && formVehicleAdd.get('formNumSerie').invalid">
                 </div>
                 <div class="form-group">
                     <label>Marca</label>

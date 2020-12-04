@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ClientService } from 'src/app/Serveis/client/client.service';
 import { Client } from 'src/app/Classes/client';
 import { MessageService } from 'primeng/api';
@@ -14,17 +14,17 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 export class AddClientComponent implements OnInit {
 
   formClientAdd:FormGroup;
-  constructor(private fb:FormBuilder, 
-    private clientService:ClientService,
-    private messageService: MessageService, 
-    private router:Router,
+  constructor(public fb:FormBuilder, 
+    public clientService:ClientService,
+    public messageService: MessageService, 
+    public router:Router,
     //Injectem una referència al DynamiDialog que estarà per poder-lo gestionar.
     //Aquest dialog s'obre desde client.component.ts per mostrar un modal que ens permeti guardar clients
     public dynamicDialog: DynamicDialogRef) { }
 
   ngOnInit(): void {
     this.formClientAdd = this.fb.group({
-      clientName: new FormControl(''),
+      clientName: new FormControl('',[Validators.required]),
       clientSurname: new FormControl(''),
       clientTelefon: new FormControl(''),
       clientEmail: new FormControl('')
@@ -32,30 +32,33 @@ export class AddClientComponent implements OnInit {
   }
 
   guardar(){
-    let client = new Client();
-    client.name=this.formClientAdd.controls['clientName'].value;
-    client.surname=this.formClientAdd.controls['clientSurname'].value;
-    client.telefon = this.formClientAdd.controls['clientTelefon'].value;
-    client.email = this.formClientAdd.controls['clientEmail'].value;
 
-    console.log(client);
+    if(this.formClientAdd.valid){
+      let client = new Client();
+      client.name=this.formClientAdd.controls['clientName'].value;
+      client.surname=this.formClientAdd.controls['clientSurname'].value;
+      client.telefon = this.formClientAdd.controls['clientTelefon'].value;
+      client.email = this.formClientAdd.controls['clientEmail'].value;
 
-    this.clientService.saveClient(client).subscribe(
-      (clientGuardat) => {
-        //Mostrem missatge al nostre <p-toast></p-toast> de la vista
-        this.messageService.add({severity:'success', summary: 'Success', detail: 'Client guardat correctament'});
-        //Eseprem 1 s a tornar enrere
-        setTimeout(()=>{
-          this.dynamicDialog.close();
-          //Tornem a la vista clients
-          this.router.navigate(['/']);
-        },1000)
+      console.log(client);
 
-      },
-      (error)=>{
-        this.messageService.add({severity:'warning', summary: 'Error', detail: 'Error guardant el client'});
-      }
-    )
+      this.clientService.saveClient(client).subscribe(
+        (clientGuardat) => {
+          //Mostrem missatge al nostre <p-toast></p-toast> de la vista
+          this.messageService.add({severity:'success', summary: 'Success', detail: 'Client guardat correctament'});
+          //Eseprem 1 s a tornar enrere
+          setTimeout(()=>{
+            this.dynamicDialog.close();
+            //Tornem a la vista clients
+            this.router.navigate(['/']);
+          },1000)
+
+        },
+        (error)=>{
+          this.messageService.add({severity:'warning', summary: 'Error', detail: 'Error guardant el client'});
+        }
+      );
+    }
   }
 
 }

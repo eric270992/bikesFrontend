@@ -7,6 +7,7 @@ import { VehicleUnic } from 'src/app/Classes/vehicle-unic';
 import {Router} from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { IncidenciaService } from 'src/app/Serveis/incidencia/incidencia.service';
+import {DialogModule} from 'primeng/dialog';
 
 @Component({
   selector: 'app-vehicle-unic',
@@ -17,15 +18,21 @@ export class VehicleUnicComponent implements OnInit {
 
   formVehicleAdd:FormGroup;
   vehicle:VehicleUnic=new VehicleUnic();
+  //Controla si es mostra el p-dialog de les observacions
+  displayModal:Boolean=false;
+  //Controla si es mostra el p-dialog de la descFeina
+  displayFeina:Boolean=false;
+  modalContent="";
+  feinaContent="";
 
-  constructor(private fb:FormBuilder, 
-    private route:ActivatedRoute,
-    private serviceVehicleUnic:VehicleNouService, 
-    private seriviceIncidencia:IncidenciaService,
-    private clientService:ClientService,
-    private router:Router,
-    private messageService:MessageService,
-    private confirmationService: ConfirmationService,) { }
+  constructor(public fb:FormBuilder, 
+    public route:ActivatedRoute,
+    public serviceVehicleUnic:VehicleNouService, 
+    public seriviceIncidencia:IncidenciaService,
+    public clientService:ClientService,
+    public router:Router,
+    public messageService:MessageService,
+    public confirmationService: ConfirmationService,) { }
 
   ngOnInit(): void {
     //Iniciem formulari en blanc
@@ -81,8 +88,11 @@ export class VehicleUnicComponent implements OnInit {
       accept: () => {
         this.seriviceIncidencia.delete(id).subscribe(
           (msg) => {
-            this.messageService.add({severity:'warn', summary: 'warn', detail: 'Incidència eliminada correctament'});
+            this.messageService.add({severity:'warn', summary: 'Eliminada', detail: 'Incidència eliminada correctament'});
             //Filtrar la llista d'incidències i eliminar la que hem borrat.
+            this.vehicle.llistaIncidencies = this.vehicle.llistaIncidencies.filter((incidencia)=>{
+              return incidencia.id != id;
+            });
           }
         )
       },
@@ -90,6 +100,18 @@ export class VehicleUnicComponent implements OnInit {
 
       }
     });
+  }
+
+  //Mostrar observacio de la llista de incidencies
+  showObservacio(content){
+    this.modalContent=content;
+    this.displayModal = true;
+  }
+
+  //Mostrar descFeina de la llista de incidencies
+  showFeina(content){
+    this.feinaContent=content;
+    this.displayFeina = true;
   }
 
 }

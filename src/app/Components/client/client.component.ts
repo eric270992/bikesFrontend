@@ -4,6 +4,7 @@ import { Client } from 'src/app/Classes/client';
 import {ConfirmationService} from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AddClientComponent } from './forms/add-client.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client',
@@ -14,9 +15,10 @@ export class ClientComponent implements OnInit {
 
   llistaClients:Client[]=[];
 
-  constructor(private _serviceClient:ClientService,
-    private confirmationService: ConfirmationService,
-    private dialogService: DialogService) { }
+  constructor(public _serviceClient:ClientService,
+    public confirmationService: ConfirmationService,
+    public dialogService: DialogService,
+    private router:Router) { }
 
   ngOnInit(): void {
 
@@ -43,7 +45,13 @@ export class ClientComponent implements OnInit {
       icon: 'pi pi-info-circle',
       accept: () => {
         this._serviceClient.deleteClient(id).subscribe(
-          (msg) => console.log(msg)
+          (msg) => {
+            console.log(msg);
+            this.llistaClients = this.llistaClients.filter((client)=>{
+              return client.id != id;
+            });
+            
+          }
         )
         console.log("eliminat");
       },

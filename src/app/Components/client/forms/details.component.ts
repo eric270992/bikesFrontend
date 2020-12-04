@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from 'src/app/Classes/client';
 import { ActivatedRoute, Router } from "@angular/router";
 import { ClientService } from 'src/app/Serveis/client/client.service';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { VehicleNouService } from 'src/app/Serveis/vehicleUnic/vehicle-nou.service';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -20,15 +20,15 @@ export class DetailsComponent implements OnInit {
   id:string="";
 
   constructor(
-    private _route:ActivatedRoute, 
-    private _serviceClient:ClientService,
-    private _serviceVehicle:VehicleNouService,
-    private fb:FormBuilder,
-    private messageService:MessageService,
-    private confirmationService: ConfirmationService,
+    public _route:ActivatedRoute, 
+    public _serviceClient:ClientService,
+    public _serviceVehicle:VehicleNouService,
+    public fb:FormBuilder,
+    public messageService:MessageService,
+    public confirmationService: ConfirmationService,
     /* DIALOG PER MOSTRAR COMPONENT PER AFEGIR VEHICLE*/
-    private dialogService: DialogService,
-    private router:Router) { }
+    public dialogService: DialogService,
+    public router:Router) { }
 
   ngOnInit(): void {
     if(this._route.snapshot.paramMap.get('id')){
@@ -37,7 +37,7 @@ export class DetailsComponent implements OnInit {
     }
     
     this.formClientDetail = this.fb.group({
-      clientName: new FormControl(''),
+      clientName: new FormControl('', [Validators.required]),
       clientSurname: new FormControl(''),
       clientTelefon: new FormControl(''),
       clientEmail: new FormControl('')
@@ -71,19 +71,22 @@ export class DetailsComponent implements OnInit {
     this.client.telefon=this.formClientDetail.controls['clientTelefon'].value;
     this.client.email=this.formClientDetail.controls['clientEmail'].value;
 
-    this._serviceClient.saveClient(this.client).subscribe(
+    if(this.formClientDetail.valid){
+      this._serviceClient.saveClient(this.client).subscribe(
 
-      (clientGuardat) => {
-        //Mostrem missatge al nostre <p-toast></p-toast> de la vista
-        this.messageService.add({severity:'info', summary: 'Info', detail: 'Client actualitzat correctament'});
-        //Eseprem 1 s a tornar enrere
-        setTimeout(()=>{
-          //Tornem a la vista clients
-          this.router.navigate(['/']);
-        },1000)
-        console.log("Client guardat satisfactoriament");
-      }
-    )
+        (clientGuardat) => {
+          //Mostrem missatge al nostre <p-toast></p-toast> de la vista
+          this.messageService.add({severity:'info', summary: 'Info', detail: 'Client actualitzat correctament'});
+          //Eseprem 1 s a tornar enrere
+          setTimeout(()=>{
+            //Tornem a la vista clients
+            this.router.navigate(['/']);
+          },1000)
+          console.log("Client guardat satisfactoriament");
+        }
+      ); //Fi subscribe
+    }
+
   }
 
   eliminar(numSerie){
@@ -96,6 +99,11 @@ export class DetailsComponent implements OnInit {
           (resposta) => {
             //Falta filtrar la llista de vehicles i treure de forma visual el que hem eliminat
             console.log(resposta);
+            this.client.llistaVehicles = this.client.llistaVehicles.filter((vehicle)=>{
+              return vehicle.numSerie != numSerie;
+            });
+            //Mostrem missatge al nostre <p-toast></p-toast> de la vista
+            this.messageService.add({severity:'warn', summary: 'Eliminat', detail: 'Vehicle eliminat correctament'});
           }
         );
       },

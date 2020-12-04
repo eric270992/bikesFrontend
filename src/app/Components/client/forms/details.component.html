@@ -5,7 +5,7 @@
             <form [formGroup]="formClientDetail">
                 <div class="form-group">
                     <label>Nom</label>
-                    <input class="form-control" type="text" formControlName="clientName">
+                    <input class="form-control" type="text" formControlName="clientName" [class.is-invalid]="formClientDetail.get('clientName').touched && formClientDetail.get('clientName').invalid">
                 </div>
                 <div class="form-group">
                     <label>Congom</label>
@@ -54,8 +54,8 @@
                     <td>{{vehicleUnic.numSerie}}</td>
                     <td>{{vehicleUnic.marca}}</td>
                     <td>{{vehicleUnic.model}}</td>
-                    <td><a href="vehicles/detail/{{vehicleUnic.numSerie}}" class="btn btn-sm btn-primary">Veure/Editar</a></td>
-                    <td><button (click)="eliminar(vehicleUnic.numSerie)" class="btn btn-sm btn-danger">Eliminar</button></td>
+                    <td class="text-center"><a href="vehicles/detail/{{vehicleUnic.numSerie}}" class="btn btn-sm btn-success"><i class="pi pi-pencil"></i></a></td>
+                    <td class="text-center"><button (click)="eliminar(vehicleUnic.numSerie)" class="btn btn-sm btn-danger"><i class="pi pi-trash"></i></button></td>
                 </tr>
             </ng-template>
         </p-table>

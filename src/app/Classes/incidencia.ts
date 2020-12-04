@@ -8,6 +8,7 @@ export class Incidencia {
     dataEntrada:Date;
     dataSortida:Date;
     observacions:string;
+    descFeina:string;
     tempsTotal:number;
     preuFinal:number;
 }

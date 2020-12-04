@@ -6,6 +6,7 @@ import { FormAddComponent } from './Components/vehicle-unic/forms/form-add.compo
 import { AddClientComponent } from './Components/client/forms/add-client.component';
 import { VehicleUnicComponent } from './Components/vehicle-unic/vehicle-unic.component';
 import { FullIncidenciaComponent } from './Components/full-incidencia/full-incidencia.component';
+import { NotFoundComponentComponent } from './Components/not-found-component/not-found-component.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path:"vehicles/detail/:numSerie", component:VehicleUnicComponent},
   {path:"incidencia/:numSerie", component:FullIncidenciaComponent},
   {path:"incidencia/:numSerie/:idIncidencia", component:FullIncidenciaComponent},
+  {path:"**", component:NotFoundComponentComponent},
 
 
 ];

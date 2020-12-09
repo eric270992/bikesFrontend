@@ -7,13 +7,13 @@
                     <div class="col my-2">
                         <div class="form-group">
                             <label>Nom Client</label>
-                            <input class="disabled form-control" formControlName="nameClient" type="text">
+                            <input class="form-control" formControlName="nameClient" type="text" readonly>
                         </div>
                     </div>
                     <div class="col my-2">
                         <div class="form-group">
                             <label>NumSerie Vehicle</label>
-                            <input class="disabled form-control" formControlName="numSerie" type="text">
+                            <input class="form-control" formControlName="numSerie" type="text" readonly>
                         </div>
                     </div>
                 </div>
@@ -57,6 +57,10 @@
                     <div class="col my-2">
                         <label>Temps Total</label>
                         <input type="number" class="form-control" formControlName="tempsTotal" (input)="calcTotal()">
+                    </div>
+                    <div class="col my-2">
+                        <label>Import temps</label>
+                        <input type="number" class="form-control" formControlName="importTemps" disabled>
                     </div>
                     <div class="col my-2">
                         <label>Preu Final</label>

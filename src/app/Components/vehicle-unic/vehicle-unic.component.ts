@@ -76,6 +76,12 @@ export class VehicleUnicComponent implements OnInit {
     this.serviceVehicleUnic.saveVehicle(this.vehicle).subscribe(
       (vehicleGuardat) => {
         console.log("Vehicle actualtizat correctament");
+
+        this.messageService.add({severity:'info', summary: 'Actualitzat', detail: 'Vehicle actualitzat correctament'});
+        setTimeout(() => {
+          this.router.navigate(['/clients/detail/'+this.vehicle.client.id]);
+        }, 1000);
+
       }
     )
   }

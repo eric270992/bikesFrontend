@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import pdfMake from "pdfmake/build/pdfmake";  
 import pdfFonts from "pdfmake/build/vfs_fonts";  
 import { Incidencia } from 'src/app/Classes/incidencia';
+import { DatePipe } from '@angular/common';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;  
 
 @Injectable({
@@ -10,7 +11,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class UtilitatsService {
 
-  constructor() { }
+  constructor(private datePipe: DatePipe) { }
 
   imprimirIncidenciaPDF(incidencia:Incidencia){
     
@@ -61,13 +62,13 @@ export class UtilitatsService {
             {
               text:[
                 {text:'Data Entrada \n', style:'underline'},
-                {text:incidencia.dataEntrada+'\n\n', style:'bigger'}
+                {text:this.datePipe.transform(incidencia.dataEntrada,'dd/MM/yyyy')+'\n\n', style:'bigger'}
               ]
             },
             {
               text:[
                 {text:'Data Sortida \n', style:'underline'},
-                {text: incidencia.dataSortida+'\n\n', style:'bigger'}
+                {text:this.datePipe.transform(incidencia.dataSortida,'dd/MM/yyyy')+'\n\n', style:'bigger'}
               ]
             }
           ]
@@ -101,6 +102,12 @@ export class UtilitatsService {
               text:[
                 {text:'Total hores: ',style:'bigger'},
                 {text: incidencia.tempsTotal+'h \n\n', style:'bold'}
+              ]
+            },
+            {
+              text:[
+                {text:'Import temps: ',style:'bigger'},
+                {text: incidencia.tempsTotal*38+'€ \n\n', style:'bold'}
               ]
             },
             {

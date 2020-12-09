@@ -23,6 +23,7 @@ import {DynamicDialogModule, DialogService} from 'primeng/dynamicdialog';
 import { NotFoundComponentComponent } from './Components/not-found-component/not-found-component.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { DialogModule } from 'primeng/dialog';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { DialogModule } from 'primeng/dialog';
     MessageService,
     ConfirmationService,
     DialogService,
+    DatePipe,
   ],
   bootstrap: [AppComponent]
 })

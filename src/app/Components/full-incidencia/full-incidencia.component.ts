@@ -51,6 +51,7 @@ export class FullIncidenciaComponent implements OnInit {
       observacions: new FormControl(''),
       descFeina: new FormControl(''),
       tempsTotal: new FormControl(''),
+      importTemps: new FormControl(''),
       preuFinal: new FormControl('')
     });
 
@@ -88,16 +89,9 @@ export class FullIncidenciaComponent implements OnInit {
   }
 
   guardar(){
-    this.incidencia.client = this.vehicleUnic.client;
-    this.incidencia.vehicle = this.vehicleUnic;
-    this.incidencia.dataEntrada = this.formIncidencia.controls['dataEntrada'].value;
-    this.incidencia.dataSortida = this.formIncidencia.controls['dataSortida'].value;
-    this.incidencia.observacions = this.formIncidencia.controls['observacions'].value;
-    this.incidencia.descFeina = this.formIncidencia.controls['descFeina'].value;
-    this.incidencia.tempsTotal = this.formIncidencia.controls['tempsTotal'].value;
-    this.incidencia.preuFinal = this.formIncidencia.controls['preuFinal'].value;
-
-
+    //ASsignem els valors
+    this.assignarValorsIncidencia();
+    //Comprovem que tot el formulari es vàlid i guardem a la BD
     if(this.formIncidencia.valid){
       this.seriviceIncidencia.save(this.incidencia).subscribe(
         (incidenciaGuardada) => {
@@ -115,12 +109,25 @@ export class FullIncidenciaComponent implements OnInit {
 
   }
 
+  assignarValorsIncidencia(){
+    this.incidencia.client = this.vehicleUnic.client;
+    this.incidencia.vehicle = this.vehicleUnic;
+    this.incidencia.dataEntrada = this.formIncidencia.controls['dataEntrada'].value;
+    this.incidencia.dataSortida = this.formIncidencia.controls['dataSortida'].value;
+    this.incidencia.observacions = this.formIncidencia.controls['observacions'].value;
+    this.incidencia.descFeina = this.formIncidencia.controls['descFeina'].value;
+    this.incidencia.tempsTotal = this.formIncidencia.controls['tempsTotal'].value;
+    this.incidencia.preuFinal = this.formIncidencia.controls['preuFinal'].value;
+  }
+
   calcTotal(){
-    this.formIncidencia.controls['preuFinal'].setValue(this.formIncidencia.controls['tempsTotal'].value*38);
+    this.formIncidencia.controls['importTemps'].setValue(this.formIncidencia.controls['tempsTotal'].value*38);
   }
 
 
   imprimirPDF(){
+    //Assignem els valors de tot al formulari a la incidència però no la guardem.
+    this.assignarValorsIncidencia();
     this.utilitats.imprimirIncidenciaPDF(this.incidencia);
   }
 

@@ -44,14 +44,14 @@ export class FullIncidenciaComponent implements OnInit {
     this.numSeriePassat = this.route.snapshot.paramMap.get('numSerie');
     this.recuperarVehicle(this.numSeriePassat);
     this.formIncidencia = this.fb.group({
-      nameClient: new FormControl('',[Validators.required]),
-      numSerie: new FormControl('',[Validators.required]),
+      nameClient: new FormControl({value:'',disabled:true},[Validators.required]),
+      numSerie: new FormControl({value:'',disabled:true},[Validators.required]),
       dataEntrada:new FormControl(''),
       dataSortida:new FormControl(''),
       observacions: new FormControl(''),
       descFeina: new FormControl(''),
       tempsTotal: new FormControl(''),
-      importTemps: new FormControl(''),
+      importTemps: new FormControl({value:'',disabled:true}),
       preuFinal: new FormControl('')
     });
 
@@ -82,8 +82,9 @@ export class FullIncidenciaComponent implements OnInit {
         this.formIncidencia.controls['dataSortida'].setValue(new Date(incidenciaRecuperada.dataSortida));
         this.formIncidencia.controls['observacions'].setValue(incidenciaRecuperada.observacions);
         this.formIncidencia.controls['descFeina'].setValue(incidenciaRecuperada.descFeina);
-        this.formIncidencia.controls['tempsTotal'].setValue(incidenciaRecuperada.tempsTotal);
+        this.formIncidencia.controls['tempsTotal'].setValue(incidenciaRecuperada.tempsTotal.toString());
         this.formIncidencia.controls['preuFinal'].setValue(incidenciaRecuperada.preuFinal);
+        this.calcTotal();
       }
     )
   }
@@ -120,9 +121,42 @@ export class FullIncidenciaComponent implements OnInit {
     this.incidencia.preuFinal = this.formIncidencia.controls['preuFinal'].value;
   }
 
+  //Calcula el total del temps a partir dels valors que retorna el metode que els converteix a un map
+  //El calcul es fa a unitats
   calcTotal(){
-    this.formIncidencia.controls['importTemps'].setValue(this.formIncidencia.controls['tempsTotal'].value*38);
+
+    //Sumem a les hores (Unitats) els minuts (convertits a unitats)
+    /*let convertit = this.utilitats.convertirTempsTotal(this.formIncidencia.controls['tempsTotal'].value);
+    let total = parseFloat(convertit.get('hores'))+(parseFloat(convertit.get('minuts'))/60);*/
+
+
+    this.formIncidencia.controls['importTemps'].setValue(this.utilitats.calcularTotalTempsImport(this.formIncidencia.controls['tempsTotal'].value,38));
   }
+
+  //Expresem el temps del input a hores i minuts, en cas de 1.75 unitats serà 2h 15min 2.15
+  comprovarTempsCorrecte(){
+    let convertit = this.utilitats.convertirTempsTotal(this.formIncidencia.controls['tempsTotal'].value);
+    let hores =  parseFloat(convertit.get('hores'));
+    let minuts = parseFloat(convertit.get('minuts'));
+    console.log("Minuts correcte: "+minuts);
+    let minutsString=minuts.toString();
+    console.log("Minuts String: "+minutsString);
+    //Si els minuts super 60, restem el valor actual de minuts a 60 per tenir la resta (75 min = 15 min i una hora extra)
+    if(minuts>=60){
+      minuts = minuts - 60;
+      //Si els minuts restultants són menors de 10 posem un 0 al davant.
+      minutsString = minuts<10 ? "0"+minuts : minuts.toString();
+      //Incrementem una hora
+      hores++;
+    }
+
+    if(minuts<10){
+      minutsString="0"+minuts;
+    }
+    this.formIncidencia.controls['tempsTotal'].setValue(hores+"."+minutsString);
+  }
+
+  
 
 
   imprimirPDF(){

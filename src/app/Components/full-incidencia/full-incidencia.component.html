@@ -56,11 +56,11 @@
                 <div class="row">
                     <div class="col my-2">
                         <label>Temps Total</label>
-                        <input type="number" class="form-control" formControlName="tempsTotal" (input)="calcTotal()">
+                        <input type="text" class="form-control" formControlName="tempsTotal" (input)="calcTotal()" (blur)="comprovarTempsCorrecte()">
                     </div>
                     <div class="col my-2">
                         <label>Import temps</label>
-                        <input type="number" class="form-control" formControlName="importTemps" disabled>
+                        <input type="number" class="form-control" formControlName="importTemps" >
                     </div>
                     <div class="col my-2">
                         <label>Preu Final</label>

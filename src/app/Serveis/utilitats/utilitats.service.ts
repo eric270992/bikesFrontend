@@ -107,7 +107,7 @@ export class UtilitatsService {
             {
               text:[
                 {text:'Import temps: ',style:'bigger'},
-                {text: incidencia.tempsTotal*38+'€ \n\n', style:'bold'}
+                {text: this.calcularTotalTempsImport(incidencia.tempsTotal,38)+'€ \n\n', style:'bold'}
               ]
             },
             {
@@ -212,4 +212,50 @@ export class UtilitatsService {
    
     pdfMake.createPdf(docDefinition).open(); 
   }
+
+  //Convertidor de String en format "X.XX" a hores i minuts
+  //Segmenta el temps que tenim introduit al input a hores i minuts a partir del '.' i crea un map dels valors
+  convertirTempsTotal(tempsAConvertir){
+    let temps = tempsAConvertir =="" ? "0" : tempsAConvertir;
+    
+    //temps = this.formIncidencia.controls['tempsTotal'].value;
+
+    
+    let stringSegments = temps.split('.');
+    let hores = "0";
+    let minuts = "0";
+
+    
+
+    hores = stringSegments[0];
+
+    if(stringSegments[1]!=null){
+      minuts = stringSegments[1];
+      //Si els minuts només tenen un decimal, posem un 0 al final.
+      if(minuts.length <= 1){
+        minuts = minuts+"0";
+        console.log(minuts);
+      }
+    }
+
+    console.log("Minuts: "+minuts);
+
+    let tempsConvertit = new Map();
+    tempsConvertit.set("hores",hores);
+    tempsConvertit.set("minuts",minuts);
+
+    return tempsConvertit;
+  }
+
+  //Calcular el import total a partir del temps
+  calcularTotalTempsImport(temps,importUnitat){
+    //Sumem a les hores (Unitats) els minuts (convertits a unitats)
+    let convertit = this.convertirTempsTotal(temps);
+    let total = parseFloat(convertit.get('hores'))+(parseFloat(convertit.get('minuts'))/60);
+
+    let resultat = (total*importUnitat).toFixed(2);
+
+    return resultat;
+  }
+
 }

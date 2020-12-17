@@ -40,7 +40,7 @@
 <!-- Prime NG Table Data -->
 <div class="container">
     <button class="btn btn-primary my-2" (click)="mostrarAfegir()">Afegir</button>
-    <p-table #clientsTable [value]="llistaClients" sortMode="multiple" [paginator]="true" [rows]="5"
+    <p-table #clientsTable [value]="llistaClients" sortMode="multiple" [paginator]="true" [rows]="10"
         [globalFilterFields]="['id','name','surname']"
     >
     <ng-template pTemplate="caption">

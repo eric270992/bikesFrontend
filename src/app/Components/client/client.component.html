@@ -49,6 +49,10 @@
                 <i class="pi pi-search"></i>
                 <input pInputText type="text" (input)="clientsTable.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
             </span>
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="filtrarVehicles($event.target.value,$event.target.value)" placeholder="Vehicle" />
+            </span>
         </div>
     </ng-template>
     
@@ -60,6 +64,7 @@
                 <th pSortableColumn="surname">Cognoms <p-sortIcon field="surname"></p-sortIcon></th>
                 <th pSortableColumn="telefon">Telefon <p-sortIcon field="telefon"></p-sortIcon></th>
                 <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+                <th>Vehicles</th>
                 <th>Detall</th>
                 <th>Eliminar</th>
             </tr>
@@ -71,6 +76,12 @@
                 <td>{{client.surname}}</td>
                 <td>{{client.telefon}}</td>
                 <td>{{client.email}}</td>
+                <td>
+                    <ul class="list-client-vehicle">
+                        <li class="client-vehicle" *ngFor="let vehicle of client.llistaVehicles"> {{vehicle.marca}} {{vehicle.model}}</li>
+                    </ul>
+                </td>
+
                 <td class="text-center"><a href="clients/detail/{{client.id}}" class="btn btn-sm btn-success"><i class="pi pi-pencil"></i></a></td>
                 <!-- <td><a href="clients/detail/{{client.id}}" [routerLink]="['clients/detail',client.id]" class="btn btn-sm btn-primary">Veure</a></td> -->
                 <td class="text-center"><button (click)="eliminar(client.id)" class="btn btn-sm btn-danger"><i class="pi pi-trash"></i></button></td>

@@ -117,76 +117,9 @@ export class UtilitatsService {
               ]
             }
           ]
-        }, //Close fourth column group
-        /* Si volen un segon full dins el mateix doc, podem descomentar-ho
-        {
-          alignment:'center',
-          text:'BIKES RIPOLL - FULL DE FEINA \n\n',
-          style:'header'
-        },
-        {
-          alignment:'center',
-          columns: [
-            {
-              text:[
-                {text: 'Nom del client \n', style:'underline'},
-                {text: incidencia.client.name+' '+incidencia.client.surname+'\n\n', style:'bigger'}
-              ]
-            },
-            {
-              text:[
-                {text:'Número serie vehicle \n', style:'underline'},
-                {text:incidencia.vehicle.numSerie+'\n\n', style:'bigger'}
-              ]
-            }
-          ]
-        }, //Close first column group
-        {
-          alignment:'center',
-          columns: [
-            {
-              text:[
-                {text:'Data Entrada \n', style:'underline'},
-                {text:incidencia.dataEntrada+'\n\n', style:'bigger'}
-              ]
-            },
-            {
-              text:[
-                {text:'Data Sortida \n', style:'underline'},
-                {text: incidencia.dataSortida+'\n\n', style:'bigger'}
-              ]
-            }
-          ]
-        }, //Close second column group
-        {
-          alignment:'center',
-          columns: [
-            {
-              text: [
-                {text:"Observacions\n\n",style:'underline'},
-                {text: incidencia.observacions+'\n\n\n\n', style:'bigger'}
-              ]
-            }
-          ]
-        },
-        {
-          alignment:'center',
-          columns: [
-            {
-              text:[
-                {text:'Total hores: ',style:'bigger'},
-                {text: incidencia.tempsTotal+'h \n\n', style:'bold'}
-              ]
-            },
-            {
-              text:[
-                {text:'Preu Final: ',style:'bigger'},
-                {text: incidencia.preuFinal+'€ \n\n',style:'bold'}
-              ]
-            }
-          ]
-        }*/ //Close third column group
-      ],//Close content
+        }, 
+      ],
+      //Declarem estils per els textos
       styles: {
         header: {
           fontSize: 18,

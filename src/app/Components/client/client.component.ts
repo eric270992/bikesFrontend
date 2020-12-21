@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 export class ClientComponent implements OnInit {
 
   llistaClients:Client[]=[];
+  //Aquest llista de clients serà inmutable, la farem servir per recarregar la llista de filtrat.
+  llistaClientBase:Client[]=[];
 
   constructor(public _serviceClient:ClientService,
     public confirmationService: ConfirmationService,
@@ -34,7 +36,10 @@ export class ClientComponent implements OnInit {
 
   getClients(){
     this._serviceClient.getAllClient().subscribe(
-      (resultado) => this.llistaClients = resultado
+      (resultado) => {
+        this.llistaClients = resultado;
+        this.llistaClientBase=resultado;
+      }
     )
   }
 
@@ -74,6 +79,39 @@ export class ClientComponent implements OnInit {
         this.getClients();
       }
     )
+  }
+
+  filtrarVehicles(marca, model){
+    //Omplirem la llista amb els clients que algun dels seus vehicles coincideixi marca o model
+    let llistaFiltrada = [];
+    //Assignem una llista per la qual flitrarem el valor que tenim de la llsita de client inmutable, per no anar fent petcions HTTP al servei
+    let llistaPerFiltrar = this.llistaClientBase;
+    //Per cada client de la llista de client iterem
+    llistaPerFiltrar.forEach(client =>{
+      //Comprovem que la llista de vehicles del client != null
+      if(client.llistaVehicles!=null){
+        //Per cada vehicle del client iterem
+        client.llistaVehicles.forEach(vehicle => {
+          //Si la marca o el model inclouen el text que ens passen i la marca i model són plenes és a dir no estan buides
+          if((vehicle.marca.includes(marca) || vehicle.model.includes(model)) && (marca!="" && model!="")){
+            //Mirem si el client ja existeix dins la llistaFiltrada, si no hi és l'afegim a la llista
+            if(!llistaFiltrada.includes(client)){
+              llistaFiltrada.push(client);
+            }
+  
+          }
+        });
+      }
+    });
+
+    //Si tenim elements a la llistaFiltrada subsitutim la llista de clients de la taula per la filtrada
+    if(llistaFiltrada.length>0){
+      this.llistaClients = llistaFiltrada;
+    }
+    //Altrament tornem a carregar la llistaClients amb la llista de clients base que tenim inmutable
+    else{
+      this.llistaClients = this.llistaClientBase;
+    }
   }
 
 }
